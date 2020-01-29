@@ -18,7 +18,13 @@ def scrape_wikipedia(wikipedia_url: str) -> Dict:
     if not next_meeting:
         logger.error(f'No `Next meeting` info found. ({wikipedia_url},')
         return {}  # raise exception
-    next_meeting_rows = next_meeting.childGenerator()
+
+    next_meeting_rows = list(next_meeting.childGenerator())
+    try:
+        teams = next_meeting_rows[0].text  # as a 'Tag' element
+    except AttributeError:
+        teams = next_meeting_rows[0]  # as a Text
+    teams = teams.replace('v.', 'v')
 
 
 if __name__ == '__main__':
