@@ -38,7 +38,7 @@ def extract_data_from_wikipedia_page(page_content: bytes) -> Dict:
     date_pattern = re.compile("\((.*)\)")
     for i, row in enumerate(next_meeting_rows[1:]):
         if row.name == 'a':
-            competition_and_season = row.attrs['title']
+            competition_and_season = row.attrs['title']  # possible to use this in the future
             competition = row.text
             competition_ok = True
             continue
@@ -54,11 +54,6 @@ def extract_data_from_wikipedia_page(page_content: bytes) -> Dict:
         return match_info
     else:
         logger.error(f'Not all fields were found.\n{soup.title.text}')
-
-    """
-    competition - text in a hyperlink
-    date - enclosed with parens
-    """
 
 
 def read_website_from_file(filename: str):
