@@ -7,14 +7,10 @@ import re
 logger = logging.getLogger(__name__)
 
 
-def get_page_content(url: str) -> bytes:
-    r = requests.get(url)
-    return r.content
-
-
-def extract_data_from_wikipedia_page(page_content: bytes) -> Dict:
+def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
     teams_ok = competition_ok = date_ok = False
-    soup = BeautifulSoup(page_content, 'html.parser')
+    r = requests.get(wikipedia_url)
+    soup = BeautifulSoup(r.content, 'html.parser')
     infobox = soup.find('table', {'class': 'infobox'})
     next_meeting = None
     for row in infobox.find_all_next('tr'):
@@ -68,9 +64,3 @@ if __name__ == '__main__':
         for line in fp.readlines():
             url = line.strip()
             urls.append(url)
-
-    el_clasico_content = read_website_from_file('el_clasico.html')
-    derby_ditalia_content = read_website_from_file('derby_ditalia.html')
-    for url in urls:
-        mi = extract_data_from_wikipedia_page(get_page_content(url))
-        print(mi)
