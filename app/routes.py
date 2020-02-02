@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, db
 from app.models import Fixture, User
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, UpdateDates
 from flask_login import current_user, login_user, logout_user
 
 
@@ -46,3 +46,15 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/update_dates', methods=['GET', 'POST'])
+def update_dates():
+    if current_user.username != 'jac08h':
+        return redirect(url_for('index'))
+
+    form = UpdateDates()
+    if form.validate_on_submit():
+        # TODO: run scraper here
+        return redirect(url_for('index'))
+    return render_template('update_dates.html', title='Update dates', form=form)
