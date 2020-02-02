@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import logging
 import re
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +43,8 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
         row = str(row)
         date_search = re.search(date_pattern, row)
         if date_search:
-            date = date_search.group(1)
+            date_string = date_search.group(1)
+            date = datetime.strptime(date_string, "%d %B %Y")
             date_ok = True
 
     if teams_ok and competition_ok and date_ok:
@@ -52,15 +54,5 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
         logger.error(f'Not all fields were found.\n{soup.title.text}')
 
 
-def read_website_from_file(filename: str):
-    with open(filename, 'rb') as fp:
-        file_contents = fp.read()
-    return file_contents
-
-
 if __name__ == '__main__':
-    urls = []
-    with open('derby_urls.txt') as fp:
-        for line in fp.readlines():
-            url = line.strip()
-            urls.append(url)
+    fi = extract_data_from_wikipedia_page('https://en.wikipedia.org/wiki/El_Cl%C3%A1sico')
