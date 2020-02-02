@@ -11,7 +11,7 @@ class Fixture(db.Model):
     team_b = db.Column(db.String(100), index=True, nullable=False, unique=False)
 
     date = db.Column(db.DateTime, index=True, unique=False, nullable=True)
-    competition = db.Column(db.String(100), index=True, nullable=False, unique=True)
+    competition = db.Column(db.String(100), index=True, nullable=False, unique=False)
 
     def __repr__(self):
         return f"{self.title} - next match: {self.date}"
