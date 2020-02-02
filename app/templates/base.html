@@ -1,0 +1,20 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - microblog</title>
+        {% else %}
+        <title>microblog</title>
+        {% endif %}
+    </head>
+    <body>
+        <div>
+            NextSoccerDerby:
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+                <p>{{ current_user.username }}</p>
+        </div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>
