@@ -29,9 +29,10 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
     teams = teams.replace('v.', 'v')
     teams_pattern = re.compile('.*v*.')
     if re.match(teams_pattern, teams):
+        team_a, team_b = teams.split(' v ')
         teams_ok = True
 
-    competition = date = None
+    competition = date = team_a = team_b = None
     date_pattern = re.compile("\((.*)\)")
     for i, row in enumerate(next_meeting_rows[1:]):
         if row.name == 'a':
@@ -48,7 +49,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
             date_ok = True
 
     if teams_ok and competition_ok and date_ok:
-        match_info = {'teams': teams, 'competition': competition, 'date': date}
+        match_info = {'team_a': team_a, 'team_b': team_b, 'competition': competition, 'date': date}
         return match_info
     else:
         logger.error(f'Not all fields were found.\n{soup.title.text}')
@@ -56,3 +57,4 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
 
 if __name__ == '__main__':
     fi = extract_data_from_wikipedia_page('https://en.wikipedia.org/wiki/El_Cl%C3%A1sico')
+    print(type(fi['date']))

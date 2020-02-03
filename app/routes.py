@@ -49,7 +49,7 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/update_dates', methods=['GET', 'POST'])
+@app.route('/control_panel', methods=['GET', 'POST'])
 def update_dates():
     try:
         if current_user.username != 'jac08h':
@@ -66,4 +66,4 @@ def update_dates():
             fixture.competition = fixture_info['competition']
             db.session.add(fixture)
         db.session.commit()
-    return render_template('update_dates.html', title='Update dates', form=form)
+    return render_template('control_panel.html', title='Control Panel', form=form)
