@@ -3,6 +3,7 @@ from app import app, db
 from app.models import Fixture, User
 from app.forms import LoginForm, RegistrationForm, UpdateDates
 from flask_login import current_user, login_user, logout_user
+from scrapers import scraper
 
 
 @app.route('/')
@@ -48,13 +49,21 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/update_dates', methods=['GET', 'POST'])
+@app.route('/admin', methods=['GET', 'POST'])
 def update_dates():
-    if current_user.username != 'jac08h':
+    try:
+        if current_user.username != 'jac08h':
+            return redirect(url_for('index'))
+    except AttributeError:
         return redirect(url_for('index'))
 
     form = UpdateDates()
     if form.validate_on_submit():
-        # TODO: run scraper here
-        return redirect(url_for('index'))
+        fixtures = Fixture.query.all()
+        for fixture in fixtures:
+            fixture_info = scraper.extract_data_from_wikipedia_page(fixture.wikipedia_url)
+            fixture.date = fixture_info['date']
+            fixture.competition = fixture_info['competition']
+            db.session.add(fixture)
+        db.session.commit()
     return render_template('update_dates.html', title='Update dates', form=form)
