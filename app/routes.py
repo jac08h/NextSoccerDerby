@@ -49,7 +49,7 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/admin', methods=['GET', 'POST'])
+@app.route('/update_dates', methods=['GET', 'POST'])
 def update_dates():
     try:
         if current_user.username != 'jac08h':
