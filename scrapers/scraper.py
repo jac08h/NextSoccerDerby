@@ -21,6 +21,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
         return {}  # raise exception
     next_meeting_rows = list(next_meeting.childGenerator())
 
+    competition = date = team_a = team_b = None
     try:
         teams = next_meeting_rows[0].text  # as a 'Tag' element
     except AttributeError:
@@ -31,8 +32,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
         team_a, team_b = teams.split(' v ')
         teams_ok = True
 
-    competition = date = team_a = team_b = None
-    date_pattern = re.compile("\((.*)\)")
+    date_pattern = re.compile(r"\((.*)\)")
     for i, row in enumerate(next_meeting_rows[1:]):
         if row.name == 'a':
             competition_and_season = row.attrs['title']  # possible to use this in the future
@@ -51,7 +51,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
         match_info = {'team_a': team_a, 'team_b': team_b, 'competition': competition, 'date': date}
         return match_info
     else:
-        logger.error(f'Not all fields were found.\n{soup.title.text}')
+        logging.error(f'Not all fields were found.\n{soup.title.text}')
 
 
 if __name__ == '__main__':

@@ -18,6 +18,7 @@ class TestDataExtraction:
         for match_info in matches_info:
             for field in fields:
                 assert field in match_info
+                assert match_info[field] is not None
 
     def test_date_valid(self, matches_info):
         for match_info in matches_info:
