@@ -78,6 +78,8 @@ def control_panel():
             fixture_info = scraper.extract_data_from_wikipedia_page(fixture.wikipedia_url)
             fixture.date = fixture_info['date']
             fixture.competition = fixture_info['competition']
+            fixture.team_a = fixture_info['team_a']
+            fixture.team_b = fixture_info['team_b']
 
             db.session.add(fixture)
         db.session.commit()
