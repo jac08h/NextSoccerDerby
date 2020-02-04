@@ -73,8 +73,6 @@ def control_panel():
     if update_dates_form.update_dates.data and update_dates_form.validate_on_submit():
         fixtures = Fixture.query.all()
         for fixture in fixtures:
-            # TODO: Temporary fix - I'd prefer the logs to come from scraper.extract_data_from_wikipedia_page directly
-            app.logger.info(f'Scraping {fixture.wikipedia_url}.')
             fixture_info = scraper.extract_data_from_wikipedia_page(fixture.wikipedia_url)
             fixture.date = fixture_info['date']
             fixture.competition = fixture_info['competition']

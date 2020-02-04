@@ -4,10 +4,11 @@ from bs4 import BeautifulSoup
 import logging
 import re
 from datetime import datetime
+from app import applogger
 
 
 def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
-    logging.info(f'Scraping {wikipedia_url}')
+    applogger.info(f'Scraping {wikipedia_url}')
     teams_ok = competition_ok = date_ok = False
     r = requests.get(wikipedia_url)
     soup = BeautifulSoup(r.content, 'html.parser')
@@ -17,7 +18,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
         if 'Next meeting' in row.text:
             next_meeting = row.find('td')
     if not next_meeting:
-        logging.error(f'No `Next meeting` info found.')
+        applogger.error(f'No `Next meeting` info found.')
         return {}  # raise exception
     next_meeting_rows = list(next_meeting.childGenerator())
 
@@ -51,7 +52,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
         match_info = {'team_a': team_a, 'team_b': team_b, 'competition': competition, 'date': date}
         return match_info
     else:
-        logging.error(f'Not all fields were found.\n{soup.title.text}')
+        applogger.error(f'Not all fields were found.\n{soup.title.text}')
 
 
 if __name__ == '__main__':
