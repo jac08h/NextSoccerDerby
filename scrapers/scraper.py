@@ -1,7 +1,6 @@
 from typing import Dict
 import requests
 from bs4 import BeautifulSoup
-import logging
 import re
 from datetime import datetime
 from app import applogger
