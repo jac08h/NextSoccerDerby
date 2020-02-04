@@ -15,6 +15,11 @@ class Fixture(db.Model):
     date = db.Column(db.DateTime, index=True, unique=False)
     competition = db.Column(db.String(100), index=True, unique=False)
 
+    def get_date(self):
+        if self.date is None:
+            return ''
+        return self.date.strftime('%d-%m-%Y')
+
     def __repr__(self):
         return f"{self.title} - next match: {self.date}"
 

@@ -9,7 +9,7 @@ from scrapers import scraper
 @app.route('/')
 @app.route('/index')
 def index():
-    fixtures = Fixture.query.all()
+    fixtures = db.session.query(Fixture).order_by(Fixture.date).all()
     return render_template('index.html', title='Next Soccer Derby', fixtures=fixtures)
 
 

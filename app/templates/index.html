@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% for fixture in fixtures %}
-    <div><p>{{ fixture }}</p></div>
-    {% endfor %}
+    <table class="table table-hover">
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Country</th>
+        </tr>
+        {% for fixture in fixtures %}
+            {% include "_fixture.html" %}
+        {% endfor %}
+    </table>
 {% endblock %}
