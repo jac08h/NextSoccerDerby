@@ -5,10 +5,9 @@ import logging
 import re
 from datetime import datetime
 
-logger = logging.getLogger(__name__)
-
 
 def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
+    logging.info(f'Scraping {wikipedia_url}')
     teams_ok = competition_ok = date_ok = False
     r = requests.get(wikipedia_url)
     soup = BeautifulSoup(r.content, 'html.parser')
@@ -18,7 +17,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
         if 'Next meeting' in row.text:
             next_meeting = row.find('td')
     if not next_meeting:
-        logger.error(f'No `Next meeting` info found.')
+        logging.error(f'No `Next meeting` info found.')
         return {}  # raise exception
     next_meeting_rows = list(next_meeting.childGenerator())
 

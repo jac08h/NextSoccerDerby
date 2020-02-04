@@ -12,7 +12,9 @@
                 <a href="{{ url_for('index') }}">Home</a>
                 <a href="{{ url_for('login') }}">Login</a>
                 <a href="{{ url_for('logout') }}">Logout</a>
-                <p>{{ current_user.username }}</p>
+                {% if current_user.username == 'jac08h' %}
+                    <a href="{{ url_for('control_panel') }}">CP</a>
+                {% endif %}
         </div>
         <hr>
         {% block content %}{% endblock %}

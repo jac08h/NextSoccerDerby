@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User
 
 
@@ -31,4 +31,15 @@ class RegistrationForm(FlaskForm):
 
 
 class UpdateDates(FlaskForm):
-    submit = SubmitField('Update dates')
+    update_dates = SubmitField('Update dates')
+
+
+class AddDerby(FlaskForm):
+    wikipedia_url = StringField('Wikipedia URL', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired()])
+    country = StringField('Country', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+    def validate_wikipedia_url(self, wikipedia_url):
+        if 'wikipedia.org' not in wikipedia_url.data:
+            raise ValidationError('Invalid wikipedia URL')

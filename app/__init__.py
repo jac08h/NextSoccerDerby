@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_admin import Admin, BaseView, expose
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, current_user
+import logging
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -12,6 +13,9 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 admin = Admin(app, name='nextsoccerderby')
 login = LoginManager(app)
+applogger = app.logger
+applogger.setLevel(logging.INFO)
+
 
 from app import routes, models
 
