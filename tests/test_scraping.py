@@ -23,3 +23,8 @@ class TestDataExtraction:
     def test_date_valid(self, matches_info):
         for match_info in matches_info:
             assert isinstance(match_info['date'], datetime)
+
+    def test_teams_valid(self, matches_info):
+        for match_info in matches_info:
+            assert match_info['team_a'][-1] != ' '
+            assert match_info['team_b'][-1] != ' '

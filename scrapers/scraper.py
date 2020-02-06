@@ -29,7 +29,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
     teams = teams.replace('v.', 'v')
     teams_pattern = re.compile('.*v*.')
     if re.match(teams_pattern, teams):
-        team_a, team_b = teams.split(' v ')
+        team_a, team_b = [team.strip() for team in teams.split(' v ')]
         teams_ok = True
 
     date_pattern = re.compile(r"\((.*)\)")
