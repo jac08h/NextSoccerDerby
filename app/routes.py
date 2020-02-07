@@ -1,5 +1,5 @@
-from flask import render_template, flash, redirect, url_for
-from app import app, db
+from flask import render_template, flash, redirect, url_for, jsonify
+from app import app, db, applogger
 from app.models import Fixture, User
 from app.forms import LoginForm, RegistrationForm, UpdateDates, AddDerby
 from flask_login import current_user, login_user, logout_user
@@ -9,8 +9,19 @@ from scrapers import scraper
 @app.route('/')
 @app.route('/index')
 def index():
-    fixtures = db.session.query(Fixture).order_by(Fixture.date).all()
-    return render_template('index.html', title='Next Soccer Derby', fixtures=fixtures)
+    data = ["Jakub", "Jacob"]
+    return render_template('index.html', title='Next Soccer Derby', fixtures=data)
+
+
+@app.route('/fixtures', methods=['POST', 'GET'])
+def fixtures():
+    fixtures = Fixture.query.all()
+    fixtures_data = []
+    for fixture in fixtures:
+        fixtures_data.append((fixture.title, fixture.team_a, fixture.team_b, fixture.get_date(), fixture.competition, fixture.country))
+
+    applogger.info('fixtures')
+    return jsonify({"data": fixtures_data})
 
 
 @app.route('/login', methods=['GET', 'POST'])
