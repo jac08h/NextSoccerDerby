@@ -1,44 +1,43 @@
 {% extends 'bootstrap/base.html' %}
 {% block scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/af-2.3.4/b-1.6.1/r-2.2.3/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/af-2.3.4/b-1.6.1/r-2.2.3/datatables.min.js"></script>
+{% block styles %}
+{{super()}}
+<link rel="stylesheet"
+      href="{{url_for('.static', filename='css/bootstrap.css')}}">
+{% endblock %}
 
 {% endblock %}
 {% block title %}
-    {% if title %}{{ title }}- NextSoccerDerby{% else %}Next Soccer Derby{% endif %}
+{% if title %}{{ title }}- NextSoccerDerby{% else %}Next Soccer Derby{% endif %}
 {% endblock %}
 
 
 {% block navbar %}
-    <nav class="navbar navbar-default">
-        <div>
-            NextSoccerDerby:
-                <a href="{{ url_for('index') }}">Home</a>
-                {% if current_user.is_anonymous %}
-                <a href="{{ url_for('login') }}">Login</a>
-                <a href="{{ url_for('register') }}">Register</a>
-                {% else %}
-                <a href="{{ url_for('logout') }}">Logout</a>
-                {% endif %}
-                {% if current_user.username == 'jac08h' %}
-                    <a href="{{ url_for('control_panel') }}">CP</a>
-                {% endif %}
-        </div>
-    </nav>
-{% endblock %}
-{% block content %}
-    <div class="container">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
+<div class="bs-docs-section clearfix">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="bs-component">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                    <a class="navbar-brand" href="{{ url_for('index') }}">Next Soccer Derby</a>
+                </nav>
+            </div>
 
-        {# application content needs to be provided in the app_content block #}
-        {% block app_content %}{% endblock %}
-    </div>
+            {% endblock %}
+           {% block content %}
+            <div class="container">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-info" role="alert">{{ message }}</div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
 
-{% endblock %}
+                {# application content needs to be provided in the app_content block #}
+                {% block app_content %}{% endblock %}
+            </div>
+
+            {% endblock %}
