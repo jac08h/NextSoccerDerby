@@ -6,6 +6,7 @@ from flask_admin import Admin, BaseView, expose
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, current_user
 from flask_bootstrap import Bootstrap
+from flask_redis import FlaskRedis
 import logging
 
 app = Flask(__name__)
@@ -17,7 +18,7 @@ login = LoginManager(app)
 applogger = app.logger
 applogger.setLevel(logging.INFO)
 bootstrap = Bootstrap(app)
-
+redis_client = FlaskRedis(app, decode_responses=True)
 
 from app import routes, models
 

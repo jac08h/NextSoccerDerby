@@ -1,16 +1,17 @@
 from flask import render_template, flash, redirect, url_for, jsonify
-from app import app, db, applogger
+from app import app, db, applogger, redis_client
 from app.models import Fixture, User
 from app.forms import LoginForm, RegistrationForm, UpdateDates, AddDerby
 from flask_login import current_user, login_user, logout_user
 from scrapers import scraper
+from datetime import datetime
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-    data = ["Jakub", "Jacob"]
-    return render_template('index.html', title='Next Soccer Derby', fixtures=data)
+    lu = redis_client.get('last_updated')
+    return render_template('index.html', title='Next Soccer Derby', last_updated=lu)
 
 
 @app.route('/fixtures', methods=['POST', 'GET'])
@@ -91,6 +92,7 @@ def control_panel():
             fixture.team_b = fixture_info['team_b']
 
             db.session.add(fixture)
+        redis_client.set('last_updated', datetime.now().strftime('%d/%m/%y %H:%M'))
         db.session.commit()
 
     return render_template('control_panel.html', title='Control Panel', add_derby_form=add_derby_form,
