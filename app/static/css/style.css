@@ -1,3 +1,8 @@
 html {
   font-size: 14px;
 }
+
+.centered {
+    width: 80%;
+    margin: 0 auto;
+}
