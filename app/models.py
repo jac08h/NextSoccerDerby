@@ -18,7 +18,7 @@ class Fixture(db.Model):
     def get_date(self):
         if self.date is None:
             return ''
-        return self.date.strftime('%d-%m-%Y')
+        return self.date.strftime('%Y-%m-%d')
 
     def __repr__(self):
         return f"{self.title} - next match: {self.date}"

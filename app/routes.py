@@ -10,16 +10,16 @@ from datetime import datetime
 @app.route('/')
 @app.route('/index')
 def index():
-    lu = redis_client.get('last_updated')
-    return render_template('index.html', title='Next Soccer Derby', last_updated=lu)
+    last_updated = redis_client.get('last_updated')
+    return render_template('index.html', title='Next Soccer Derby', last_updated=last_updated)
 
 
-@app.route('/fixtures', methods=['POST', 'GET'])
+@app.route('/fixtures', methods=['POST'])
 def fixtures():
     fixtures = Fixture.query.all()
     fixtures_data = []
     for fixture in fixtures:
-        fixtures_data.append((fixture.title, fixture.team_a, fixture.team_b, fixture.get_date(), fixture.competition, fixture.country))
+        fixtures_data.append((fixture.title, fixture.get_date(), fixture.competition, fixture.team_a, fixture.team_b, fixture.country))
 
     applogger.info('fixtures')
     return jsonify({"data": fixtures_data})
