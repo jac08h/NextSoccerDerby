@@ -92,7 +92,7 @@ def control_panel():
             fixture.team_b = fixture_info['team_b']
 
             db.session.add(fixture)
-        redis_client.set('last_updated', datetime.now().strftime('%d/%m/%y %H:%M'))
+        redis_client.set('last_updated', datetime.now().strftime('%Y-%m-%d %H:%M'))
         db.session.commit()
 
     return render_template('control_panel.html', title='Control Panel', add_derby_form=add_derby_form,
