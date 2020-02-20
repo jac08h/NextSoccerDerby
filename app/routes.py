@@ -14,7 +14,7 @@ def index():
     return render_template('index.html', title='Next Soccer Derby', last_updated=last_updated)
 
 
-@app.route('/fixtures', methods=['POST'])
+@app.route('/fixtures', methods=['GET', 'POST'])
 def fixtures():
     fixtures = Fixture.query.all()
     fixtures_data = []
