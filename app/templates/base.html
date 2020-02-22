@@ -29,7 +29,7 @@
 <body class="index-page sidebar-collapse">
 {% block navbar %}
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent " color-on-scroll="400">
+<nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent" color-on-scroll="400">
 	<div class="container">
 		<div class="navbar-translate">
 			<a class="navbar-brand" href="{{ url_for('index') }}" rel="tooltip" data-placement="bottom" target="_blank">
@@ -62,9 +62,15 @@
 			</div>
 
 {% block footer %}
-<div class="section footer" data-background-color="black">
-    <p>jac08h</p>
-</div>
+<footer class="footer" data-background-color="black">
+	<div class="container">
+		<ul>
+			<li>
+                <a href="#">jac08h</a>
+			</li>
+		</ul>
+	</div>
+</footer>
 {% endblock %}
 {% endblock %}
 
