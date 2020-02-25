@@ -1,10 +1,9 @@
-from flask import render_template, flash, redirect, url_for, jsonify
 from app import app, db, applogger, redis_client
 from app.models import Fixture, User
-from app.forms import LoginForm, RegistrationForm, UpdateDates, AddDerby
-from flask_login import current_user, login_user, logout_user
-from scrapers import scraper
-from datetime import datetime
+from app.forms import LoginForm, RegistrationForm, AddDerby
+
+from flask import render_template, flash, redirect, url_for, jsonify
+from flask_login import current_user, login_user, logout_user, login_required
 
 
 @app.route('/')
@@ -62,38 +61,19 @@ def register():
 
 
 @app.route('/control_panel', methods=['GET', 'POST'])
+@login_required
 def control_panel():
-    try:
-        if current_user.username != 'jac08h':
-            return redirect(url_for('index'))
-    except AttributeError:
+    if current_user.username != 'jac08h':
         return redirect(url_for('index'))
 
-    update_dates_form = UpdateDates()
     add_derby_form = AddDerby()
 
-    # the first boolean in if statement must preceed the second,
-    # otherwise the form wouldn't work properly
-    # See: https://stackoverflow.com/a/39766205/12580224
-    if add_derby_form.submit.data and add_derby_form.validate_on_submit():
+    # See here for multiple forms on page: https://stackoverflow.com/a/39766205/12580224
+    if add_derby_form.validate_on_submit():
         new_derby = Fixture(wikipedia_url=add_derby_form.wikipedia_url.data,
                             title=add_derby_form.title.data,
                             country=add_derby_form.country.data)
         db.session.add(new_derby)
         db.session.commit()
 
-    if update_dates_form.update_dates.data and update_dates_form.validate_on_submit():
-        fixtures = Fixture.query.all()
-        for fixture in fixtures:
-            fixture_info = scraper.extract_data_from_wikipedia_page(fixture.wikipedia_url)
-            fixture.date = fixture_info['date']
-            fixture.competition = fixture_info['competition']
-            fixture.team_a = fixture_info['team_a']
-            fixture.team_b = fixture_info['team_b']
-
-            db.session.add(fixture)
-        redis_client.set('last_updated', datetime.now().strftime('%Y-%m-%d %H:%M'))
-        db.session.commit()
-
-    return render_template('control_panel.html', title='Control Panel', add_derby_form=add_derby_form,
-                           update_dates_form=update_dates_form)
+    return render_template('control_panel.html', title='Control Panel', add_derby_form=add_derby_form)

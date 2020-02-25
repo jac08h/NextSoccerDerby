@@ -1,8 +1,8 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, abort
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_admin import Admin, BaseView, expose
+from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, current_user
 from flask_bootstrap import Bootstrap
@@ -13,7 +13,6 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-admin = Admin(app, name='nextsoccerderby')
 login = LoginManager(app)
 applogger = app.logger
 applogger.setLevel(logging.INFO)
@@ -23,18 +22,18 @@ redis_client = FlaskRedis(app, decode_responses=True)
 from app import routes, models
 
 
-class ModelViewModified(ModelView):
+class MyIndexView(AdminIndexView):
     def is_accessible(self):
         try:
             is_admin = (current_user.username == 'jac08h')
-        except AttributeError:
+        except AttributeError:  # no user logged in
             is_admin = False
         return is_admin
 
     def inaccessible_callback(self, name, **kwargs):
-        # redirect to login page if user doesn't have access
-        return redirect(url_for('login'))
+        return abort(403)
 
 
-admin.add_view(ModelViewModified(models.Fixture, db.session))
-admin.add_view(ModelViewModified(models.User, db.session))
+admin = Admin(app, name='nextsoccerderby', template_mode='bootstrap3', index_view=MyIndexView())
+admin.add_view(ModelView(models.Fixture, db.session))
+admin.add_view(ModelView(models.User, db.session))

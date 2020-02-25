@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
-{% block content %}
+{% block app_content %}
 <h2>Add new match</h2>
 <form action="" method="post">
     {{ add_derby_form.hidden_tag() }}
@@ -26,11 +27,5 @@
         {% endfor %}
     </p>
     <p>{{ add_derby_form.submit() }}</p>
-</form>
-<br>
-<h2>Update dates</h2>
-<form action="" method="post">
-    {{ update_dates_form.hidden_tag() }}
-    {{ update_dates_form.update_dates() }}
 </form>
 {% endblock %}
