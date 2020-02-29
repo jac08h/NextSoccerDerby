@@ -2,6 +2,7 @@ from app import db, applogger, redis_client
 from app.models import Fixture
 from scrapers import scraper
 from datetime import datetime
+from sys import exit
 
 fixtures = Fixture.query.all()
 for fixture in fixtures:
@@ -13,7 +14,7 @@ for fixture in fixtures:
         fixture.team_b = fixture_info['team_b']
     except Exception as e:
         applogger.error(f"{e}\n({fixture.wikipedia_url})")
-        break
+        exit()
     db.session.add(fixture)
 
 redis_client.set('last_updated', datetime.now().strftime('%Y-%m-%d %H:%M'))
