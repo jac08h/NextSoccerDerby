@@ -32,8 +32,11 @@
 <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent" color-on-scroll="400">
 	<div class="container">
 		<div class="navbar-translate">
-			<a class="navbar-brand" href="{{ url_for('index') }}" rel="tooltip" data-placement="bottom">
+			<a class="navbar-brand" href="{{ url_for('index') }}">
                 Next Soccer Derby
+			</a>
+			<a class="navbar-brand" href="{{ url_for('about') }}">
+				About
 			</a>
 		</div>
 	</div>
@@ -57,18 +60,19 @@
 
 				{# application content needs to be provided in the app_content block #}
 				{% block app_content %}{% endblock %}
-				</div>
-				</div>
 			</div>
+		</div>
+	</div>
 
 {% block footer %}
 <footer class="footer" data-background-color="black">
 	<div class="container">
-		<ul>
-			<li>
-                <a href="#">jac08h</a>
-			</li>
-		</ul>
+        <nav>
+            Data from <a href="https://www.wikipedia.org/" class="text-warning">Wikipedia</a>. Theme by <a href="https://www.creative-tim.com/" class="text-warning">Creative Tim</a>.
+		</nav>
+        <div id="copyright" class="copyright">
+			<p class="text-warning">jac08h</p>
+		</div>
 	</div>
 </footer>
 {% endblock %}

@@ -13,12 +13,18 @@ def index():
     return render_template('index.html', title='Next Soccer Derby', last_updated=last_updated)
 
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
 @app.route('/fixtures', methods=['GET', 'POST'])
 def fixtures():
     fixtures = Fixture.query.all()
     fixtures_data = []
     for fixture in fixtures:
-        fixtures_data.append((fixture.title, fixture.get_date(), fixture.competition, fixture.team_a, fixture.team_b, fixture.country))
+        fixtures_data.append(
+            (fixture.title, fixture.get_date(), fixture.competition, fixture.team_a, fixture.team_b, fixture.country))
 
     applogger.info('fixtures')
     return jsonify({"data": fixtures_data})
