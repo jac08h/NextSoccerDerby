@@ -29,7 +29,8 @@ def fixtures():
     fixtures_data = []
     for fixture in fixtures:
         fixtures_data.append(
-            (fixture.title, fixture.get_date(), fixture.competition, fixture.team_a, fixture.team_b, fixture.country))
+            (fixture.title, fixture.get_date(), fixture.get_competition(), fixture.get_team_a(), fixture.get_team_b(), fixture.get_country())
+        )
 
     applogger.info('fixtures')
     return jsonify({"data": fixtures_data})

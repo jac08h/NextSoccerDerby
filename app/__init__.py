@@ -19,6 +19,9 @@ applogger.setLevel(logging.INFO)
 bootstrap = Bootstrap(app)
 redis_client = FlaskRedis(app, decode_responses=True)
 
+# used in models, probably a wrong place to initialize it
+NULL_REPRESENTATION = '?'
+
 from app import routes, models
 
 

@@ -6,21 +6,28 @@ from datetime import datetime
 from app import applogger
 
 
+class DateNotFound(Exception):
+    pass
+
+
 def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
     applogger.info(f'Scraping {wikipedia_url}')
     teams_ok = competition_ok = date_ok = False
     r = requests.get(wikipedia_url)
     soup = BeautifulSoup(r.content, 'html.parser')
+
+    # Find Next meeting row
     infobox = soup.find('table', {'class': 'infobox'})
-    next_meeting = None
+    found_next_meeting = False
     for row in infobox.find_all_next('tr'):
         if 'Next meeting' in row.text:
+            found_next_meeting = True
             next_meeting = row.find('td')
-    if not next_meeting:
-        applogger.error(f'No `Next meeting` info found.')
-        return {}  # raise exception
-    next_meeting_rows = list(next_meeting.childGenerator())
+            next_meeting_rows = list(next_meeting.childGenerator())
+    if not found_next_meeting:
+        raise DateNotFound
 
+    # Find teams names
     competition = date = team_a = team_b = None
     try:
         teams = next_meeting_rows[0].text  # as a 'Tag' element
@@ -32,6 +39,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
         team_a, team_b = [team.strip() for team in teams.split(' v ')]
         teams_ok = True
 
+    # Find date and competition
     date_pattern = re.compile(r"\((.*)\)")
     for i, row in enumerate(next_meeting_rows[1:]):
         if row.name == 'a':

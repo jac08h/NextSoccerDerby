@@ -1,4 +1,4 @@
-from app import db, login
+from app import db, login, NULL_REPRESENTATION
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
@@ -15,10 +15,30 @@ class Fixture(db.Model):
     date = db.Column(db.DateTime, index=True, unique=False)
     competition = db.Column(db.String(100), index=True, unique=False)
 
+    def get_country(self):
+        if self.country is None:
+            return NULL_REPRESENTATION
+        return self.country
+
+    def get_team_a(self):
+        if self.team_a is None:
+            return NULL_REPRESENTATION
+        return self.team_a
+
+    def get_team_b(self):
+        if self.team_b is None:
+            return NULL_REPRESENTATION
+        return self.team_b
+
     def get_date(self):
         if self.date is None:
-            return ''
+            return NULL_REPRESENTATION
         return self.date.strftime('%Y-%m-%d')
+
+    def get_competition(self):
+        if self.competition is None:
+            return NULL_REPRESENTATION
+        return self.competition
 
     def __repr__(self):
         return f"{self.title} - next match: {self.date}"
