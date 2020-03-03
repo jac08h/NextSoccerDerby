@@ -18,6 +18,11 @@ def about():
     return render_template('about.html')
 
 
+@app.route('/credits')
+def credits():
+    return render_template('credits.html')
+
+
 @app.route('/fixtures', methods=['GET', 'POST'])
 def fixtures():
     fixtures = Fixture.query.all()

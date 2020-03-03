@@ -66,13 +66,8 @@
 
 {% block footer %}
 <footer class="footer" data-background-color="black">
-	<div class="container">
-        <nav>
-            Data from <a href="https://www.wikipedia.org/" class="text-warning">Wikipedia</a>. Theme by <a href="https://www.creative-tim.com/" class="text-warning">Creative Tim</a>.
-		</nav>
-        <div id="copyright" class="copyright">
-			<p class="text-warning">jac08h</p>
-		</div>
+	<div class="container text-center">
+		<p class="copyright"><a href="{{ url_for('credits') }}" class="text-warning">Credits</a> |   © 2020 jac08h</p>
 	</div>
 </footer>
 {% endblock %}
