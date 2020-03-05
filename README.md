@@ -6,4 +6,4 @@ Website to display dates for upcoming soccer derby matches. Never miss another *
 
 
 ## License
-This project is licensed under the GNU General Public License - see [LICENSE](LICENSE.md)
+This project is licensed under the GNU General Public License - see [LICENSE](LICENSE)
