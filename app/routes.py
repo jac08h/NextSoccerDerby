@@ -13,11 +13,6 @@ def index():
     return render_template('index.html', title='Next Soccer Derby', last_updated=last_updated)
 
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-
 @app.route('/credits')
 def credits():
     return render_template('credits.html')
