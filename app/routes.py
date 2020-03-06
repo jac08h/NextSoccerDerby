@@ -10,17 +10,17 @@ from flask_login import current_user, login_user, logout_user, login_required
 @app.route('/index')
 def index():
     last_updated = redis_client.get('last_updated')
-    return render_template('index.html', title='Next Soccer Derby', last_updated=last_updated)
+    return render_template('index.html', last_updated=last_updated)
 
 
 @app.route('/faq')
 def faq():
-    return render_template('faq.html')
+    return render_template('faq.html', title='FAQ')
 
 
 @app.route('/credits')
 def credits():
-    return render_template('credits.html')
+    return render_template('credits.html', title='Credits')
 
 
 @app.route('/fixtures', methods=['GET', 'POST'])
@@ -29,7 +29,8 @@ def fixtures():
     fixtures_data = []
     for fixture in fixtures:
         fixtures_data.append(
-            (fixture.title, fixture.get_date(), fixture.get_competition(), fixture.get_team_a(), fixture.get_team_b(), fixture.get_country())
+            (fixture.title, fixture.get_date(), fixture.get_competition(), fixture.get_team_a(), fixture.get_team_b(),
+             fixture.get_country())
         )
 
     applogger.info('fixtures')
