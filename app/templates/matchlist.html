@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div data-background-color="black">
+    <h2 class="text-warning">Matchlist</h2>
+    <div class="description">
+        <ul>
+            {% for title in fixture_titles %}
+            <li>{{ title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -23,6 +23,14 @@ def credits():
     return render_template('credits.html', title='Credits')
 
 
+@app.route('/matchlist')
+def matchlist():
+    fixtures = Fixture.query.all()
+    fixtures_titles = [fixture.title for fixture in fixtures]
+    print(fixtures_titles)
+    return render_template('matchlist.html', title='Matchlist', fixture_titles=fixtures_titles)
+
+
 @app.route('/fixtures', methods=['GET', 'POST'])
 def fixtures():
     fixtures = Fixture.query.all()
@@ -30,7 +38,8 @@ def fixtures():
     for fixture in fixtures:
         if fixture.date is not None:  # don't display matches which are to be announced
             fixtures_data.append(
-                (fixture.title, fixture.get_date(), fixture.get_competition(), fixture.get_team_a(), fixture.get_team_b(),
+                (fixture.title, fixture.get_date(), fixture.get_competition(), fixture.get_team_a(),
+                 fixture.get_team_b(),
                  fixture.get_country()))
 
     applogger.info('fixtures')
