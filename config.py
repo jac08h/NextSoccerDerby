@@ -8,3 +8,5 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     REDIS_URL = os.environ.get('REDIS_URL') or 'redis://localhost:6379/0'
+    if 'localhost' in REDIS_URL:
+        TESTING = True
