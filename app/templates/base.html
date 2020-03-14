@@ -4,6 +4,8 @@
 {% block title %}
    {% if title %}{{ title }} | NextSoccerDerby{% else %}Next Soccer Derby{% endif %}
 {% endblock %}
+	<meta>
+</head>
 
 {% block scripts %}
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -42,7 +44,6 @@ ga('send', 'pageview');
 <link rel="stylesheet" href="{{url_for('.static', filename='css/now-ui-kit.min.css')}}">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/r-2.2.3/datatables.min.css"/>
 {% endblock %}
-</head>
 
 
 
