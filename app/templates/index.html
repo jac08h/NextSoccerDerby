@@ -10,10 +10,13 @@
                     "type": "POST"
                     },
                 "order": [[ 1, "asc" ]],
-                "responsive": true
+                "responsive": true,
+                "scrollY":        "50vh",
+                "scrollCollapse": true,
+                "paging":         false
                 }
             );
-        });
+});
 </script>
 {% endblock %}
 
@@ -21,7 +24,7 @@
 <table id="table_id" class="display table table-dark table-striped table-hover">
     <thead>
         <tr>
-            <th>Title</th>
+            <th class="text-warning">Title</th>
             <th>Date</th>
             <th>Competition</th>
             <th>Team A</th>
@@ -31,6 +34,5 @@
     </thead>
 </table>
 <p class="text-warning">Last updated: {{ last_updated }}</p>
-<p class="text-warning">Displaying only matches where a date of the next meet-up is known. For all matches in database, see <a href="{{url_for('matchlist')}}">matchlist</a>.</p>
 {% endblock %}
 

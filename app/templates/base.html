@@ -26,7 +26,6 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 ga('create', 'UA-160617104-1', 'auto');
 ga('send', 'pageview');
 </script>
-
 <!-- End Google Analytics -->
 
 <script src="{{ url_for('.static', filename='js/core/jquery.min.js') }}" type="text/javascript"></script>
@@ -51,7 +50,7 @@ ga('send', 'pageview');
 <body class="index-page sidebar-collapse">
 {% block navbar %}
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent" color-on-scroll="400">
+<nav class="navbar navbar-expand-lg bg-secondary fixed-top" color-on-scroll="400">
 	<div class="container">
 		<div class="navbar-translate">
 			<a class="navbar-brand text-warning" href="{{ url_for('index') }}">
