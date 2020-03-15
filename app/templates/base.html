@@ -1,11 +1,17 @@
 {% extends 'bootstrap/base.html' %}
 <html>
-<head>
+
+
 {% block title %}
-   {% if title %}{{ title }} | NextSoccerDerby{% else %}Next Soccer Derby{% endif %}
+   {% if title %}{{ title }} | NextSoccerDerby{% else %}NextSoccerDerby — Upcoming Matches Between Rival Soccer Teams{% endif %}
 {% endblock %}
-	<meta>
-</head>
+
+{% block head %}
+{{ super() }}
+<meta charset="utf-8" />
+<meta name="description" content="Derbies from all around the world sorted by the date of next clash. Never miss another El Clásico!" />
+{% endblock %}
+
 
 {% block scripts %}
 <!-- Global site tag (gtag.js) - Google Analytics -->
