@@ -7,9 +7,11 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, current_user
 from flask_bootstrap import Bootstrap
 from flask_redis import FlaskRedis
+from flask_compress import Compress
 import logging
 
 app = Flask(__name__)
+Compress(app)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
