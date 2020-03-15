@@ -24,7 +24,7 @@ redis_client = FlaskRedis(app, decode_responses=True)
 # used in models, probably a wrong place to initialize it
 NULL_REPRESENTATION = '?'
 
-from app import routes, models
+from app import routes, models, errors
 
 
 class MyIndexView(AdminIndexView):
