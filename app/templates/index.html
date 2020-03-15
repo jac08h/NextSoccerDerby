@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block head %}
+{{ super() }}
+<meta name="description" content="Derbies from all around the world sorted by the date of next game. Never miss another El Clásico!" />
+{% endblock %}
+
 {% block scripts %}
 {{ super() }}
 <script>

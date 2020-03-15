@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block head %}
+{{ super() }}
+<meta name="description" content="Credits to people who made this website possible." />
+{% endblock %}
+
 {% block app_content %}
 <div class="description" data-background-color="black">
     <h2 class="text-warning">Credits</h2>

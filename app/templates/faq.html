@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block head %}
+{{ super() }}
+<meta name="description" content="Answers to the most common questions." />
+{% endblock %}
+
 {% block app_content %}
 <div data-background-color="black">
     <h2 class="text-warning">Frequently Asked Questions</h2>
