@@ -2,7 +2,7 @@
 
 {% block head %}
 {{ super() }}
-<meta name="description" content="Derbies from all around the world sorted by the date of next game. Never miss another El Clásico!" />
+<meta name="description" content="Derbies from all around the world sorted by the date of next ame. Never miss another El Clásico!" />
 {% endblock %}
 
 {% block scripts %}
@@ -18,10 +18,16 @@
                 "responsive": true,
                 "scrollY":        "50vh",
                 "scrollCollapse": true,
-                "paging":         false
+                "paing":         false,
+                "columnDefs": [
+                    {
+                        "targets": [ 2 ],
+                        "visible": false,
+                    }
+                ]
                 }
-            );
-});
+        );
+    });
 </script>
 {% endblock %}
 
@@ -30,11 +36,11 @@
     <thead>
         <tr>
             <th class="text-warning">Title</th>
-            <th>Date</th>
-            <th>Competition</th>
-            <th>Team A</th>
-            <th>Team B</th>
-            <th>Country</th>
+            <th class="text-warning">Date</th>
+            <th class="text-warning">Competition</th>
+            <th class="text-warning">Team #1</th>
+            <th class="text-warning">Team #2</th>
+            <th class="text-warning">Country</th>
         </tr>
     </thead>
 </table>
