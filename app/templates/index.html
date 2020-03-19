@@ -2,7 +2,7 @@
 
 {% block head %}
 {{ super() }}
-<meta name="description" content="Derbies from all around the world sorted by the date of next ame. Never miss another El Clásico!" />
+<meta name="description" content="Derbies from all around the world sorted by the date of next meeting. Never miss another El Clásico!" />
 {% endblock %}
 
 {% block scripts %}
@@ -25,7 +25,7 @@
                         "visible": false,
                     }
                 ]
-                }
+            }
         );
     });
 </script>
@@ -35,12 +35,12 @@
 <table id="table_id" class="display table table-dark table-striped table-hover">
     <thead>
         <tr>
-            <th class="text-warning">Title</th>
-            <th class="text-warning">Date</th>
-            <th class="text-warning">Competition</th>
-            <th class="text-warning">Team #1</th>
-            <th class="text-warning">Team #2</th>
-            <th class="text-warning">Country</th>
+            <th class="text-warning"><i class="far fa-futbol"></i> &nbsp;Title</th>
+            <th class="text-warning"><i class="fas fa-calendar-day"></i>  &nbsp;Date</th>
+            <th class="text-warning"><i class="fas fa-trophy"></i>  &nbsp;Competition</th>
+            <th class="text-warning"><i class="fas fa-running"></i>  &nbsp;Team #1</th>
+            <th class="text-warning"><i class="fas fa-running"></i>  &nbsp;Team #2</th>
+            <th class="text-warning"><i class="fab fa-font-awesome-flag"></i>  &nbsp;Country</th>
         </tr>
     </thead>
 </table>
