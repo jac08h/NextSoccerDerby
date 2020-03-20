@@ -9,22 +9,22 @@
 {{ super() }}
 <script>
     $(document).ready( function () {
-        $('#table_id').DataTable( {
+        $('#fixtures_table').DataTable( {
                 "ajax": {
                     "url": "/fixtures",
                     "type": "POST"
                     },
+                "columns": [
+                    { "data": "title" },
+                    { "data": "date" },
+                    { "data": "teams" },
+                    { "data": "country" }
+                ],
                 "order": [[ 1, "asc" ]],
                 "responsive": true,
                 "scrollY":        "50vh",
                 "scrollCollapse": true,
-                "paging":         false,
-                "columnDefs": [
-                    {
-                        "targets": [ 2 ],
-                        "visible": false,
-                    }
-                ]
+                "paging":         false
             }
         );
     });
@@ -32,12 +32,11 @@
 {% endblock %}
 
 {% block app_content %}
-<table id="table_id" class="display table table-dark table-striped table-hover">
+<table id="fixtures_table" class="display table table-dark table-striped table-hover">
     <thead>
         <tr>
             <th class="text-warning"><i class="far fa-futbol"></i> &nbsp;Title</th>
             <th class="text-warning"><i class="fas fa-calendar-day"></i>  &nbsp;Date</th>
-            <th class="text-warning"><i class="fas fa-trophy"></i>  &nbsp;Competition</th>
             <th class="text-warning"><i class="fas fa-running"></i>  &nbsp;Teams</th>
             <th class="text-warning"><i class="fab fa-font-awesome-flag"></i>  &nbsp;Country</th>
         </tr>
