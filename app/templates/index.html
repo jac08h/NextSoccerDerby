@@ -8,78 +8,36 @@
 {% block scripts %}
 {{ super() }}
 <script>
-    /* Formatting function for row details - modify as you need */
-function format ( d ) {
-    // `d` is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-        '<tr>'+
-            '<td>Competition:</td>'+
-            '<td>'+d.competition+'</td>'+
-        '</tr>'+
-    '</table>';
-}
-
-$(document).ready( function () {
-    var table = $('#fixtures_table').DataTable( {
-        "ajax": {
-            "url": "/fixtures",
-            "type": "POST"
-            },
-        "columns": [
-            {
-                "className":      'details-control',
-                "orderable":      false,
-                "data":           null,
-                "defaultContent": '',
-                "render": function () {
-                     return '<i class="fa fa-plus-square" aria-hidden="true"></i>';
-                 },
-                 width:"15px"
-            },
-            { "data": "title" },
-            { "data": "date" },
-            { "data": "teams" },
-            { "data": "country" }
-        ],
-        "order": [[ 1, "asc" ]],
-        "responsive": true,
-        "scrollY":        "50vh",
-        "scrollCollapse": true,
-        "paging":         false,
-    } );
-
-    // Add event listener for opening and closing details
-    $('#fixtures_table tbody').on('click', 'td.details-control', function () {
-        var tr = $(this).closest('tr');
-        var row = table.row( tr );
-        var tdi = tr.find("i.fa");
-
-        if ( row.child.isShown() ) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-            tdi.first().removeClass('fa-minus-square');
-            tdi.first().addClass('fa-plus-square');
-        }
-        else {
-            // Open this row
-            row.child( format(row.data()) ).show();
-            tr.addClass('shown');
-            tdi.first().removeClass('fa-plus-square');
-            tdi.first().addClass('fa-minus-square');
-        }
-    } );
-} );
+    $(document).ready( function () {
+        $('#table_id').DataTable( {
+                "ajax": {
+                    "url": "/fixtures",
+                    "type": "POST"
+                    },
+                "order": [[ 1, "asc" ]],
+                "responsive": true,
+                "scrollY":        "50vh",
+                "scrollCollapse": true,
+                "paging":         false,
+                "columnDefs": [
+                    {
+                        "targets": [ 2 ],
+                        "visible": false,
+                    }
+                ]
+            }
+        );
+    });
 </script>
 {% endblock %}
 
 {% block app_content %}
-<table id="fixtures_table" class="display table table-dark table-striped table-hover">
+<table id="table_id" class="display table table-dark table-striped table-hover">
     <thead>
         <tr>
-            <th></th>
             <th class="text-warning"><i class="far fa-futbol"></i> &nbsp;Title</th>
             <th class="text-warning"><i class="fas fa-calendar-day"></i>  &nbsp;Date</th>
+            <th class="text-warning"><i class="fas fa-trophy"></i>  &nbsp;Competition</th>
             <th class="text-warning"><i class="fas fa-running"></i>  &nbsp;Teams</th>
             <th class="text-warning"><i class="fab fa-font-awesome-flag"></i>  &nbsp;Country</th>
         </tr>
