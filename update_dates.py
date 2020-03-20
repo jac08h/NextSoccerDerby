@@ -23,5 +23,7 @@ for fixture in fixtures:
 
     db.session.add(fixture)
 
-redis_client.set('last_updated', datetime.now().strftime('%Y-%m-%d %H:%M'))
+redis_client.set('last_updated', datetime.now().strftime('%B %-d, %Y'))
+# %-d represents a day without a leading zero, but it works only on UNIX systems
+# on Windows, %#d can be used
 db.session.commit()
