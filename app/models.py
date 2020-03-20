@@ -40,6 +40,9 @@ class Fixture(db.Model):
             return NULL_REPRESENTATION
         return self.competition
 
+    def get_teams(self):
+        return f'{self.team_a} - {self.team_b}'
+
     def __repr__(self):
         return f"{self.title} - next match: {self.date}"
 
