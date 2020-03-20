@@ -8,26 +8,30 @@
 {% block scripts %}
 {{ super() }}
 <script>
-    $(document).ready( function () {
-        $('#fixtures_table').DataTable( {
-                "ajax": {
-                    "url": "/fixtures",
-                    "type": "POST"
-                    },
-                "columns": [
-                    { "data": "title" },
-                    { "data": "date" },
-                    { "data": "teams" },
-                    { "data": "country" }
+$(document).ready( function () {
+    $('#fixtures_table').DataTable( {
+            "ajax": {
+                "url": "/fixtures",
+                "type": "POST"
+                },
+            "columns": [
+                { "data": "title" },
+                { "data": "date" },
+                { "data": "teams" },
+                { "data": "country" }
+            ],
+            "dom": 'Bftrip',
+            "buttons": [
+                'columnsToggle'
                 ],
-                "order": [[ 1, "asc" ]],
-                "responsive": true,
-                "scrollY":        "50vh",
-                "scrollCollapse": true,
-                "paging":         false
-            }
-        );
-    });
+            "order": [[ 1, "asc" ]],
+            "responsive": true,
+            "scrollY":        "50vh",
+            "scrollCollapse": true,
+            "paging":         false
+        }
+    );
+});
 </script>
 {% endblock %}
 
