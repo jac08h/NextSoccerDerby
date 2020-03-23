@@ -2,48 +2,79 @@
 
 {% block head %}
 {{ super() }}
-<meta name="description" content="Derbies from all around the world sorted by the date of next meeting. Never miss another El Clásico!" />
+<meta name="description"
+      content="Derbies from all around the world sorted by the date of next meeting. Never miss another El Clásico!"/>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
 <script>
-$(document).ready( function () {
-    $('#fixtures_table').DataTable( {
-            "ajax": {
-                "url": "/fixtures",
-                "type": "POST"
-                },
-            "columns": [
-                { "data": "title" },
-                { "data": "date" },
-                { "data": "teams" },
-                { "data": "country" }
-            ],
-            "dom": 'Bftrip',
-            "buttons": [
-                'columnsToggle'
-                ],
-            "order": [[ 1, "asc" ]],
-            "responsive": true,
-            "scrollY":        "50vh",
-            "scrollCollapse": true,
-            "paging":         false
+$(document).ready(function() {
+  $('#fixtures_table').DataTable({
+    "ajax": {
+      "url": "/fixtures",
+      "type": "POST"
+    },
+    "columns": [
+    { "data": "title"},
+    { "data": "date"},
+    { "data": "teams"},
+    { "data": "competition"},
+    { "data": "country"},
+    { "data": "country"}
+    ],
+    "order": [
+      [1, "asc"]
+    ],
+    "responsive": {
+      "details": {
+        "renderer": function(api, rowIdx, columns) {
+          // Show hidden columns in row details
+          var data = $.map(columns, function(col, i) {
+            if(i == 5){ return; }
+            return col.hidden ?
+              '<tr><td>' + col.title + ':</td> ' +
+              '<td>' + col.data + '</td></tr>' :
+              '';
+          }).join('');
+
+          // Generate a table
+          data = $('<table width="100%"/>').append(data).prop('outerHTML');
+
+          // Show extra info
+          data += '<div class="content-custom">Custom content</div>';
+
+          return data;
         }
-    );
-});
+      }
+    },
+    "scrollY": "50vh",
+    "scrollCollapse": true,
+    "paging": false,
+    "columnDefs": [
+        {
+            "className": 'none',
+            "targets": [ 5 ]
+        }
+    ]
+  });
+})
+
+
 </script>
 {% endblock %}
 
 {% block app_content %}
 <table id="fixtures_table" class="display table table-dark table-striped table-hover">
     <thead>
-        <tr>
-            <th class="text-warning"><i class="far fa-futbol"></i> &nbsp;Title</th>
-            <th class="text-warning"><i class="fas fa-calendar-day"></i>  &nbsp;Date</th>
-            <th class="text-warning"><i class="fas fa-running"></i>  &nbsp;Teams</th>
-            <th class="text-warning"><i class="fab fa-font-awesome-flag"></i>  &nbsp;Country</th>
-        </tr>
+    <tr>
+        <th class="text-warning"><i class="far fa-futbol"></i> &nbsp;Title</th>
+        <th class="text-warning"><i class="fas fa-calendar-day"></i> &nbsp;Date</th>
+        <th class="text-warning"><i class="fas fa-running"></i> &nbsp;Teams</th>
+        <th class="text-warning"><i class="fas fa-calendar-day"></i> &nbsp;Competition</th>
+        <th class="text-warning"><i class="fas fa-calendar-day"></i> &nbsp;Country</th>
+        <th></th>
+    </tr>
     </thead>
 </table>
 <p class="text-warning">Last updated: {{ last_updated }}</p>
