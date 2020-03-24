@@ -54,6 +54,7 @@ def fixtures():
                     'country': fixture.get_country(),
                     'title': fixture.title,
                     'teams': fixture.get_teams(),
+                    'wikipedia_url': fixture.wikipedia_url
                  })
     applogger.info('fixtures')
     return jsonify({"data": fixtures_data})

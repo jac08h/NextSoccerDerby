@@ -21,7 +21,9 @@ $(document).ready(function() {
     { "data": "teams"},
     { "data": "competition"},
     { "data": "country"},
-    { "data": "country"}
+    { "data": "wikipedia_url"},
+
+    { "data": "country"}  // placeholder
     ],
     "order": [
       [1, "asc"]
@@ -31,7 +33,7 @@ $(document).ready(function() {
         "renderer": function(api, rowIdx, columns) {
           // Show hidden columns in row details
           var data = $.map(columns, function(col, i) {
-            if(i == 5){ return; }
+            if(i == 6){ return; }
             return col.hidden ?
               '<tr><td>' + col.title + ':</td> ' +
               '<td>' + col.data + '</td></tr>' :
@@ -41,9 +43,6 @@ $(document).ready(function() {
           // Generate a table
           data = $('<table width="100%"/>').append(data).prop('outerHTML');
 
-          // Show extra info
-          data += '<div class="content-custom">Custom content</div>';
-
           return data;
         }
       }
@@ -52,9 +51,16 @@ $(document).ready(function() {
     "scrollCollapse": true,
     "paging": false,
     "columnDefs": [
+        // not displayed directly, only upon clicking on '+' button
         {
             "className": 'none',
-            "targets": [ 5 ]
+            "targets": [ 4, 5 ]
+        },
+
+        // placeholder to always display '+' button
+        {
+            "className": 'none',
+            "targets": [ 6 ]
         }
     ]
   });
@@ -68,11 +74,12 @@ $(document).ready(function() {
 <table id="fixtures_table" class="display table table-dark table-striped table-hover">
     <thead>
     <tr>
-        <th class="text-warning"><i class="far fa-futbol"></i> &nbsp;Title</th>
+        <th class="text-warning"><i class="fas fa-futbol"></i> &nbsp;Title</th>
         <th class="text-warning"><i class="fas fa-calendar-day"></i> &nbsp;Date</th>
         <th class="text-warning"><i class="fas fa-running"></i> &nbsp;Teams</th>
         <th class="text-warning"><i class="fas fa-calendar-day"></i> &nbsp;Competition</th>
         <th class="text-warning"><i class="fas fa-calendar-day"></i> &nbsp;Country</th>
+        <th class="text-warning"><i class="fas fa-globe"></i> &nbsp;Wikipedia URL</th>
         <th></th>
     </tr>
     </thead>
