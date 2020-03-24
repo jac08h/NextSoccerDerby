@@ -43,6 +43,9 @@ class Fixture(db.Model):
     def get_teams(self):
         return f'{self.team_a} - {self.team_b}'
 
+    def get_wikipedia_url(self):
+        return f"<a href= {self.wikipedia_url} target='_blank'>{self.title} - Wikipedia</a>"
+
     def __repr__(self):
         return f"{self.title} - next match: {self.date}"
 
