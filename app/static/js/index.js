@@ -10,7 +10,6 @@ $(document).ready(function() {
     { "data": "teams"},
     { "data": "competition"},
     { "data": "country"},
-    { "data": "wikipedia_url"},
 
     { "data": "country"}  // placeholder
     ],
@@ -22,7 +21,7 @@ $(document).ready(function() {
         "renderer": function(api, rowIdx, columns) {
           // Show hidden columns in row details
           var data = $.map(columns, function(col, i) {
-            if(i == 6){ return; }
+            if(i == 5){ return; }
             return col.hidden ?
               '<tr><td>' + col.title + ':</td> ' +
               '<td>' + col.data + '</td></tr>' :
@@ -43,13 +42,13 @@ $(document).ready(function() {
         // not displayed directly, only upon clicking on '+' button
         {
             "className": 'none',
-            "targets": [ 3, 4, 5 ]
+            "targets": [ 3, 4 ]
         },
 
         // placeholder to always display '+' button
         {
             "className": 'none',
-            "targets": [ 6 ]
+            "targets": [ 5 ]
         }
     ]
   });

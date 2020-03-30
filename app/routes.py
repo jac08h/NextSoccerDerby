@@ -47,7 +47,6 @@ def fixtures():
     fixtures_data = []
     for fixture in fixtures:
         if fixture.date is not None:  # don't display matches which are to be announced
-            print(fixture.get_wikipedia_url())
             fixtures_data.append(
                 {
                     'date': fixture.get_date(),

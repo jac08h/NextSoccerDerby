@@ -2,6 +2,7 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
+<div class="description" data-background-color="black">
     <h2>Login</h2>
     <form action="" method="post">
         {{ form.hidden_tag() }}
@@ -21,4 +22,5 @@
         </p>
        <p>{{ form.submit() }}</p>
     </form>
+</div>
 {% endblock %}
