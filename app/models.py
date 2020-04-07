@@ -15,6 +15,8 @@ class Fixture(db.Model):
     date = db.Column(db.DateTime, index=True, unique=False)
     competition = db.Column(db.String(100), index=True, unique=False)
 
+    is_active = db.Column(db.Boolean, default=True)
+
     def get_country(self):
         if self.country is None:
             return NULL_REPRESENTATION

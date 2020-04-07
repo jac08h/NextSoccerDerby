@@ -46,7 +46,7 @@ def fixtures():
     fixtures = Fixture.query.all()
     fixtures_data = []
     for fixture in fixtures:
-        if fixture.date is not None:  # don't display matches which are to be announced
+        if (fixture.date is not None) and (fixture.is_active is None or fixture.is_active):
             fixtures_data.append(
                 {
                     'date': fixture.get_date(),
@@ -55,7 +55,7 @@ def fixtures():
                     'title': fixture.title,
                     'teams': fixture.get_teams(),
                     'wikipedia_url': fixture.get_wikipedia_url(),
-                 })
+                })
     applogger.info('fixtures')
     return jsonify({"data": fixtures_data})
 
