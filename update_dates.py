@@ -17,13 +17,13 @@ for fixture in fixtures:
         fixture_info = scraper.extract_data_from_wikipedia_page(fixture.wikipedia_url)
         if fixture_info['date'] - today < dt.timedelta(0):  # scraped date already happened
             fixture.date = None
+            fixture.competition = None
         else:
             fixture.date = fixture_info['date']
 
         fixture.competition = fixture_info['competition']
         fixture.team_a = fixture_info['team_a']
         fixture.team_b = fixture_info['team_b']
-        fixture.is_active = True
 
     except scraper.DateNotFound:
         fixture.date = None  # interpreted as NULL

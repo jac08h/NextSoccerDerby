@@ -16,6 +16,7 @@ $(document).ready(function() {
     "order": [
       [1, "asc"]
     ],
+
     "responsive": {
       "details": {
         "renderer": function(api, rowIdx, columns) {
@@ -50,6 +51,11 @@ $(document).ready(function() {
             "className": 'none',
             "targets": [ 5 ]
         }
-    ]
+        ],
+
+    "language": {
+        "emptyTable": "No matches with known date available.",
+    }
+
   });
 })
