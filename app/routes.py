@@ -28,17 +28,18 @@ def credits():
     return render_template('credits.html', title='Credits')
 
 
-@app.route('/matchlist')
-def matchlist():
+@app.route('/all_fixtures')
+def all_fixtures():
     fixtures = Fixture.query.all()
-    known_titles = []
-    tba_titles = []
+    fixtures_info = []
     for fixture in fixtures:
-        if fixture.date is None:
-            tba_titles.append(fixture.title)
-        else:
-            known_titles.append(fixture.title)
-    return render_template('matchlist.html', title='Matchlist', known_titles=known_titles, tba_titles=tba_titles)
+        if fixture.is_active:
+            if fixture.date is None:
+                fixtures_info.append((fixture.title, False))
+            else:
+                fixtures_info.append((fixture.title, True))
+
+    return render_template('all_fixtures.html', title='All Fixtures', fixtures_info=fixtures_info)
 
 
 @app.route('/fixtures', methods=['GET', 'POST'])

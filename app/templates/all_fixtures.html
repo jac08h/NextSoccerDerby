@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="text-layout description">
+    <h2 class="text-warning">All Fixtures</h2>
+    <p>List of all derby matches in the database.<br><span class="text-warning">Orange color</span> indicates that date of next meeting is known.</p>
+    <ul>
+        {% for title, has_known_date in fixtures_info %}
+        {% if has_known_date %}
+        <li class="text-warning">{{ title }}</li>
+        {% else %}
+        <li>{{ title }}</li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
