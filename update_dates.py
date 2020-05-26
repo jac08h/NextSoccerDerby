@@ -6,8 +6,7 @@ import datetime as dt
 from sys import exit
 
 fixtures = Fixture.query.all()
-today = dt.datetime.today()
-
+today = dt.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
 
 for fixture in fixtures:
     if fixture.is_active is False:  # don't scrape anything

@@ -74,5 +74,8 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
 
 
 if __name__ == '__main__':
-    fi = extract_data_from_wikipedia_page('https://en.wikipedia.org/wiki/El_Cl%C3%A1sico')
-    print(type(fi['date']))
+    import datetime as dt
+    today = dt.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    fi = extract_data_from_wikipedia_page('https://en.wikipedia.org/wiki/Der_Klassiker')
+    print(today)
+    print(fi['date'] - today)
