@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+{% for article in articles %}
+    <p>{{ article.title }}</p>
+    <p>{{ article.author.username }}</p>
+{% endfor %}
+{% endblock %}

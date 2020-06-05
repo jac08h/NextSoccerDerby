@@ -1,6 +1,6 @@
 from app import app, db, applogger, redis_client
-from app.models import Fixture, User
-from app.forms import LoginForm, RegistrationForm, AddDerby
+from app.models import Fixture, User, Article
+from app.forms import LoginForm, RegistrationForm, AddDerby, PostArticleForm
 
 from flask import render_template, flash, redirect, url_for, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
@@ -99,3 +99,24 @@ def control_panel():
         db.session.commit()
 
     return render_template('control_panel.html', title='Control Panel', add_derby_form=add_derby_form)
+
+
+@app.route('/post_article', methods=['GET', 'POST'])
+@login_required
+def post_article():
+    post_article_form = PostArticleForm()
+    if post_article_form.validate_on_submit():
+        new_article = Article(title=post_article_form.title.data,
+                              body=post_article_form.body.data,
+                              user_id=current_user.id)
+        db.session.add(new_article)
+        db.session.commit()
+        return redirect(url_for('index'))
+
+    return render_template('post_article.html', title='Post Article', form=post_article_form)
+
+
+@app.route('/articles')
+def articles():
+    articles = Article.query.all()
+    return render_template('articles.html', title='Articles', articles=articles)

@@ -43,3 +43,9 @@ class AddDerby(FlaskForm):
     def validate_wikipedia_url(self, wikipedia_url):
         if 'wikipedia.org' not in wikipedia_url.data:
             raise ValidationError('Invalid wikipedia URL')
+
+
+class PostArticleForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    body = StringField('Body', validators=[DataRequired()])
+    submit = SubmitField('Submit')
