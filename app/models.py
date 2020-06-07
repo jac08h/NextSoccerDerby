@@ -53,6 +53,20 @@ class Fixture(db.Model):
         return f"{self.title} - next match: {self.date}"
 
 
+user_roles = db.Table('user_roles',
+                      db.Column('role_id', db.Integer, db.ForeignKey('role.id'), primary_key=True),
+                      db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True)
+                      )
+
+
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    role_name = db.Column(db.String(), unique=True, index=True)
+
+    def __repr__(self):
+        return f"{self.role_name}"
+
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -60,6 +74,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     articles = db.relationship('Article', backref='author', lazy='dynamic')
+    roles = db.relationship('Role', secondary=user_roles, lazy='subquery',
+                            backref=db.backref('members', lazy=True))
 
     def __repr__(self):
         return '<User {}>'.format(self.username)

@@ -42,3 +42,4 @@ class MyIndexView(AdminIndexView):
 admin = Admin(app, name='nextsoccerderby', template_mode='bootstrap3', index_view=MyIndexView())
 admin.add_view(ModelView(models.Fixture, db.session))
 admin.add_view(ModelView(models.User, db.session))
+admin.add_view(ModelView(models.Role, db.session))
