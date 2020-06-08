@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-{% for article in articles %}
-    <p>{{ article.title }}</p>
-    <p>{{ article.author.username }}</p>
+<div class="text-layout">
+    <h2 class="text-warning">Articles</h2>
+    {% for article in articles %}
+    <h5 class="text-warning">{{ article.title }}</h5>
+</div>
 {% endfor %}
 {% endblock %}

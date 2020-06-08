@@ -2,12 +2,13 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-<h2></h2>
+<div class="text-layout">
+    <h2>Post Article</h2>
 <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
         {{ form.title.label }}<br>
-        {{ form.title(size=32) }}<br>
+        {{ form.title(size=50) }}<br>
         {% for error in form.title.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
@@ -15,11 +16,12 @@
 
     <p>
         {{ form.body.label }}<br>
-        {{ form.body(size=32) }}<br>
+        {{ form.body(cols="80", rows="5")}}<br>
         {% for error in form.body.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p>{{ form.submit() }}</p>
 </form>
+</div>
 {% endblock %}

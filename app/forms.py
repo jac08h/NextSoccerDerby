@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User
 
@@ -47,5 +47,5 @@ class AddDerby(FlaskForm):
 
 class PostArticleForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    body = StringField('Body', validators=[DataRequired()])
+    body = TextAreaField('Article', validators=[DataRequired()])
     submit = SubmitField('Submit')
