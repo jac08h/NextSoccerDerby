@@ -120,3 +120,9 @@ def post_article():
 def articles():
     articles = Article.query.all()
     return render_template('articles.html', title='Articles', articles=articles)
+
+
+@app.route('/article/<article_id>')
+def article(article_id):
+    article = Article.query.filter_by(id=article_id).first_or_404()
+    return render_template('article.html', article=article)

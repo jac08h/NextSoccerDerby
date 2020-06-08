@@ -86,6 +86,16 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def is_journalist(self):
+        if 'journalist' in self.roles:
+            return True
+        return False
+
+    def is_admin(self):
+        if 'admin' in self.roles:
+            return True
+        return False
+
 
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
