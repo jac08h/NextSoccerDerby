@@ -126,3 +126,15 @@ def articles():
 def article(article_id):
     article = Article.query.filter_by(id=article_id).first_or_404()
     return render_template('article.html', article=article)
+
+
+@app.route('/user/<username>')
+def user(username):
+    print(username)
+    user = User.query.filter_by(username=username).first_or_404()
+    print(user.roles[1])
+    if user.is_journalist():
+        return render_template('user.html', user=user)
+
+    else:
+        return render_template('404.html'), 404

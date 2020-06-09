@@ -87,15 +87,17 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def is_journalist(self):
-        if 'journalist' in self.roles:
-            return True
+    def check_role(self, role_name: str) -> bool:
+        for role in self.roles:
+            if role_name in role.role_name:
+                return True
         return False
 
+    def is_journalist(self):
+        return self.check_role('journalist')
+
     def is_admin(self):
-        if 'admin' in self.roles:
-            return True
-        return False
+        return self.check_role('admin')
 
 
 article_tags = db.Table('article_tags',
@@ -127,7 +129,6 @@ class Article(db.Model):
     def get_article_paragraphs(self) -> List[str]:
         paragraphs = [p for p in self.body.split('\n')]
         return paragraphs
-
 
 
 @login.user_loader
