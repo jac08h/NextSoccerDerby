@@ -97,12 +97,28 @@ class User(UserMixin, db.Model):
         return False
 
 
+article_tags = db.Table('article_tags',
+                        db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
+                        db.Column('article_id', db.Integer, db.ForeignKey('article.id'), primary_key=True)
+                        )
+
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(), index=True)
+
+    def __repr__(self):
+        return self.name
+
+
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140), index=True)
     body = db.Column(db.String)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    tags = db.relationship('Tag', secondary=article_tags, lazy='subquery',
+                           backref=db.backref('articles', lazy=True))
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
