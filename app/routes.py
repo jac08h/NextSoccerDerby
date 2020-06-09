@@ -111,7 +111,7 @@ def post_article():
                               user_id=current_user.id)
         db.session.add(new_article)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('article', article_id=new_article.id))
 
     return render_template('post_article.html', title='Post Article', form=post_article_form)
 

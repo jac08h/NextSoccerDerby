@@ -4,8 +4,10 @@
 {% block app_content %}
 <div class="text-layout">
     <h5 class="text-warning">{{ article.title }}</h5>
+    {% for p in article.get_article_paragraphs() %}
     <p>
-        {{ article.body }}
+        {{ p }}
     </p>
+    {% endfor %}
 </div>
 {% endblock %}

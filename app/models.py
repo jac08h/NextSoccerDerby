@@ -2,6 +2,7 @@ from app import db, login, NULL_REPRESENTATION
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
+from typing import List
 
 
 class Fixture(db.Model):
@@ -122,6 +123,11 @@ class Article(db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+    def get_article_paragraphs(self) -> List[str]:
+        paragraphs = [p for p in self.body.split('\n')]
+        return paragraphs
+
 
 
 @login.user_loader
