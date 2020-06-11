@@ -1,8 +1,8 @@
 from app import app, db, applogger, redis_client
 from app.models import Fixture, User, Article
-from app.forms import LoginForm, RegistrationForm, AddDerby, PostArticleForm
+from app.forms import LoginForm, RegistrationForm, AddDerby, PostArticleForm, EditArticleForm
 
-from flask import render_template, flash, redirect, url_for, jsonify
+from flask import render_template, flash, redirect, url_for, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 
 
@@ -126,6 +126,25 @@ def articles():
 def article(article_id):
     article = Article.query.filter_by(id=article_id).first_or_404()
     return render_template('article.html', article=article)
+
+
+@app.route('/edit_article/<article_id>', methods=['GET', 'POST'])
+def edit_article(article_id):
+    article = Article.query.filter_by(id=article_id).first_or_404()
+    if not (current_user.is_authenticated and (current_user.is_admin() or current_user is article.author)):
+        return render_template('403.html'), 403
+    form = EditArticleForm()
+    if form.validate_on_submit():
+        article.title = form.title.data
+        article.body = form.body.data
+        db.session.commit()
+        flash('Saved')
+        return redirect(url_for('edit_article', article_id=article.id))
+    elif request.method == 'GET':
+        form.title.data = article.title
+        form.body.data = article.body
+
+    return render_template('edit_article.html', form=form)
 
 
 @app.route('/user/<username>')

@@ -49,3 +49,9 @@ class PostArticleForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     body = TextAreaField('Article', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class EditArticleForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    body = TextAreaField('Article', validators=[DataRequired()])
+    submit = SubmitField('Submit')

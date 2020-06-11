@@ -9,5 +9,8 @@
         {{ p }}
     </p>
     {% endfor %}
+    {% if current_user.is_authenticated and (current_user == article.author or current_user.is_admin()) %}
+    <p><a href="{{ url_for('edit_article', article_id=article.id) }}">Edit article</a></p>
+    {% endif %}
 </div>
 {% endblock %}
