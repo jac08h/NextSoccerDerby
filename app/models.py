@@ -117,11 +117,13 @@ class Tag(db.Model):
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140), index=True)
+    subtitle = db.Column(db.String(280))
     body = db.Column(db.String)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
     tags = db.relationship('Tag', secondary=article_tags, lazy='subquery',
                            backref=db.backref('articles', lazy=True))
+    is_public = db.Column(db.Boolean, default=True)
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
@@ -129,6 +131,13 @@ class Article(db.Model):
     def get_article_paragraphs(self) -> List[str]:
         paragraphs = [p for p in self.body.split('\n')]
         return paragraphs
+
+    def has_subtitle(self) -> bool:
+        if self.subtitle is not None and len(self.subtitle) > 0:
+            return True
+
+    def get_formatted_timestamp(self) -> str:
+        return self.timestamp
 
 
 @login.user_loader

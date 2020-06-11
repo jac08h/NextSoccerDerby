@@ -47,11 +47,13 @@ class AddDerby(FlaskForm):
 
 class PostArticleForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
+    subtitle = StringField('Subtitle')
     body = TextAreaField('Article', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
 class EditArticleForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
+    subtitle = StringField('Subtitle')
     body = TextAreaField('Article', validators=[DataRequired()])
     submit = SubmitField('Submit')

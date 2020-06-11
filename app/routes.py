@@ -136,12 +136,14 @@ def edit_article(article_id):
     form = EditArticleForm()
     if form.validate_on_submit():
         article.title = form.title.data
+        article.subtitle = form.subtitle.data
         article.body = form.body.data
         db.session.commit()
         flash('Saved')
         return redirect(url_for('edit_article', article_id=article.id))
     elif request.method == 'GET':
         form.title.data = article.title
+        form.subtitle.data = article.subtitle
         form.body.data = article.body
 
     return render_template('edit_article.html', form=form)
