@@ -30,7 +30,6 @@ for fixture in fixtures:
 
     except Exception as e:
         applogger.error(f"{e}\n({fixture.wikipedia_url})")
-        exit()
 
     db.session.add(fixture)
 

@@ -7,7 +7,7 @@
     <h5>
         <a href="{{ url_for('article', article_id=article.id) }}">
             {{ article.title }}
-        </a>
+        </a> <small>{{ article.get_posted_date() }}</small>
     </h5>
     {% endfor %}
 </div>

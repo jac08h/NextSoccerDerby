@@ -5,11 +5,11 @@
 <div class="article">
     <h2 class="text-warning">{{ article.title }}
         <br>
-        <small>
             {% if article.has_subtitle() %}
+            <small>
             {{ article.subtitle }}
+            </small>
             {% endif %}
-        </small>
     </h2>
     {% for p in article.get_article_paragraphs() %}
     <p>
@@ -19,8 +19,16 @@
     <p class="text-warning">
         By {{ article.author.username }}
     </p>
+
+    {% if article.get_edited_date() is not none %}
+    <small>
+        Last edited: {{ article.get_edited_date() }}
+    </small>
+    {% endif %}
+
     {% if current_user.is_authenticated and (current_user == article.author or current_user.is_admin()) %}
     <p><a href="{{ url_for('edit_article', article_id=article.id) }}">Edit article</a></p>
     {% endif %}
 </div>
+
 {% endblock %}

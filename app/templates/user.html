@@ -3,6 +3,15 @@
 
 {% block app_content %}
 <div class="text-layout">
-    <h5 class="text-warning">{{ user.username }}</h5>
+    <h2 class="text-warning">{{ user.username }}</h2>
+
+    <h4 class="text-warning">User articles</h4>
+        {% for article in user.articles %}
+        <h5>
+            <a href="{{ url_for('article', article_id=article.id) }}">
+                {{ article.title }}
+            </a>
+        </h5>
+        {% endfor %}
 </div>
 {% endblock %}

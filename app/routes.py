@@ -4,6 +4,7 @@ from app.forms import LoginForm, RegistrationForm, AddDerby, PostArticleForm, Ed
 
 from flask import render_template, flash, redirect, url_for, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
+import datetime as dt
 
 
 @app.route('/')
@@ -118,13 +119,15 @@ def post_article():
 
 @app.route('/articles')
 def articles():
-    articles = Article.query.all()
+    articles = Article.query.filter_by(is_public=True).order_by(Article.timestamp.desc())
     return render_template('articles.html', title='Articles', articles=articles)
 
 
 @app.route('/article/<article_id>')
 def article(article_id):
     article = Article.query.filter_by(id=article_id).first_or_404()
+    if not article.is_public and current_user != article.author:
+        return render_template('404.html'), 404
     return render_template('article.html', article=article)
 
 
@@ -138,6 +141,7 @@ def edit_article(article_id):
         article.title = form.title.data
         article.subtitle = form.subtitle.data
         article.body = form.body.data
+        article.edited_timestamp = dt.datetime.now()
         db.session.commit()
         flash('Saved')
         return redirect(url_for('edit_article', article_id=article.id))
@@ -151,9 +155,7 @@ def edit_article(article_id):
 
 @app.route('/user/<username>')
 def user(username):
-    print(username)
     user = User.query.filter_by(username=username).first_or_404()
-    print(user.roles[1])
     if user.is_journalist():
         return render_template('user.html', user=user)
 

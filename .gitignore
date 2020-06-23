@@ -5,3 +5,5 @@ __pycache__
 playground.py
 notes.txt
 try_scraping.py
+find_scrapable*
+helpers*

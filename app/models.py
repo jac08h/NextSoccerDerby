@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
 from typing import List
+import datetime as dt
 
 
 class Fixture(db.Model):
@@ -120,6 +121,7 @@ class Article(db.Model):
     subtitle = db.Column(db.String(280))
     body = db.Column(db.String)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    edited_timestamp = db.Column(db.DateTime, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
     tags = db.relationship('Tag', secondary=article_tags, lazy='subquery',
                            backref=db.backref('articles', lazy=True))
@@ -136,8 +138,21 @@ class Article(db.Model):
         if self.subtitle is not None and len(self.subtitle) > 0:
             return True
 
-    def get_formatted_timestamp(self) -> str:
-        return self.timestamp
+    def get_posted_date(self):
+        return self.format_date(self.timestamp)
+
+    def get_edited_date(self) -> str or None:
+        if self.edited_timestamp is not None:
+            return self.format_datetime(self.edited_timestamp)
+        else:
+            return None
+
+    def format_date(self, date:dt.datetime) -> str:
+        return date.strftime('%B %-d, %Y')
+
+    def format_datetime(self, date:dt.datetime) -> str:
+        return date.strftime('%B %-d, %Y %H:%M')
+
 
 
 @login.user_loader
