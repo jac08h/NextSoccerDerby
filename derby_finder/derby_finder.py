@@ -1,6 +1,7 @@
-from typing import Set
+from typing import Set, Iterable
 import re
 from time import time
+from pathlib import Path
 
 import helpers
 
@@ -58,12 +59,33 @@ def check_if_derby_wiki_page(wiki_url: str) -> bool:
         return False
 
 
+def filename_to_path(filename: str) -> Path:
+    return Path(filename)
+
+
+def write_iterable_to_file(iterable: Iterable, filename: str):
+    path = filename_to_path(filename)
+    with open(path, mode='w') as fp:
+        for i in iterable:
+            try:
+                fp.write(i)
+            except TypeError:
+                fp.write(str(i))
+            finally:
+                fp.write('\n')
+
+
 if __name__ == '__main__':
     a = time()
-    list_url = EUROPE_URLS['spain']
-    urls = get_wiki_urls_from_wiki_page(list_url)
-    for url in urls:
-        if check_if_derby_wiki_page(url):
-            print(url)
+    valid_urls = set()
+    urls_list = EUROPE_URLS['global']
+    urls = get_wiki_urls_from_wiki_page(urls_list)
 
+    print(len(urls))
+    for (i, url) in enumerate(urls):
+        print(i)
+        if check_if_derby_wiki_page(url):
+            valid_urls.add(url)
+
+    write_iterable_to_file(valid_urls, 'global.txt')
     print(time() - a)
