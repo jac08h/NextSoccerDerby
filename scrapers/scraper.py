@@ -18,6 +18,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
 
     r = requests.get(wikipedia_url)
     soup = BeautifulSoup(r.content, 'html.parser')
+    title = soup.find('h1', {'id':'firstHeading'}).text
 
     # Find `Next meeting` row
     infobox = soup.find('table', {'class': 'infobox'})
@@ -66,7 +67,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
             continue
 
     if all(set_fields.values()):
-        match_info = {'team_a': team_a, 'team_b': team_b, 'competition': competition, 'date': date}
+        match_info = {'team_a': team_a, 'team_b': team_b, 'competition': competition, 'date': date, 'title':title}
         return match_info
     else:
         missing_fields = [field for field, is_set in set_fields.items() if not is_set]

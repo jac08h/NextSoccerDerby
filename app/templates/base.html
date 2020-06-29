@@ -101,6 +101,14 @@ ga('send', 'pageview');
                     </a>
                 </li>
 
+                {% if current_user.is_admin %}
+                <li>
+                    <a class="navbar-brand text-primary" href="{{ url_for('add_derby') }}">
+                        Add Derby
+                    </a>
+                </li>
+                {% endif %}
+
                 {% if current_user.is_journalist %}
                 <li>
                     <a class="navbar-brand text-primary" href="{{ url_for('post_article') }}">

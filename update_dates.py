@@ -23,6 +23,7 @@ for fixture in fixtures:
         fixture.competition = fixture_info['competition']
         fixture.team_a = fixture_info['team_a']
         fixture.team_b = fixture_info['team_b']
+        fixture.title = fixture_info['title']
 
     except scraper.DateNotFound:
         fixture.date = None  # interpreted as NULL

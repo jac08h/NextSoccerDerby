@@ -83,9 +83,9 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/control_panel', methods=['GET', 'POST'])
+@app.route('/add_derby', methods=['GET', 'POST'])
 @login_required
-def control_panel():
+def add_derby():
     if current_user.username != 'jac08h':
         return redirect(url_for('index'))
 
@@ -94,13 +94,33 @@ def control_panel():
     # See here for multiple forms on page: https://stackoverflow.com/a/39766205/12580224
     if add_derby_form.validate_on_submit():
         new_derby = Fixture(wikipedia_url=add_derby_form.wikipedia_url.data,
-                            title=add_derby_form.title.data,
                             country=add_derby_form.country.data)
         db.session.add(new_derby)
         db.session.commit()
+        return redirect(url_for('add_derby'))
 
-    return render_template('control_panel.html', title='Control Panel', add_derby_form=add_derby_form)
+    return render_template('add_derby.html', title='Add Derby', add_derby_form=add_derby_form)
 
+# @app.route('/edit_article/<article_id>', methods=['GET', 'POST'])
+# def edit_article(article_id):
+#     article = Article.query.filter_by(id=article_id).first_or_404()
+#     if not (current_user.is_authenticated and (current_user.is_admin() or current_user is article.author)):
+#         return render_template('403.html'), 403
+#     form = EditArticleForm()
+#     if form.validate_on_submit():
+#         article.title = form.title.data
+#         article.subtitle = form.subtitle.data
+#         article.body = form.body.data
+#         article.edited_timestamp = dt.datetime.now()
+#         db.session.commit()
+#         flash('Saved')
+#         return redirect(url_for('edit_article', article_id=article.id))
+#     elif request.method == 'GET':
+#         form.title.data = article.title
+#         form.subtitle.data = article.subtitle
+#         form.body.data = article.body
+#
+#     return render_template('edit_article.html', form=form)
 
 @app.route('/post_article', methods=['GET', 'POST'])
 @login_required

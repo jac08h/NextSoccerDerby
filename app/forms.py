@@ -36,7 +36,6 @@ class UpdateDates(FlaskForm):
 
 class AddDerby(FlaskForm):
     wikipedia_url = StringField('Wikipedia URL', validators=[DataRequired()])
-    title = StringField('Title', validators=[DataRequired()])
     country = StringField('Country', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
