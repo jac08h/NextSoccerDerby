@@ -34,7 +34,7 @@ def all_fixtures():
     fixtures = Fixture.query.all()
     fixtures_info = []
     for fixture in fixtures:
-        if fixture.is_active:
+        if fixture.is_active and fixture.title is not None:
             if fixture.date is None:
                 fixtures_info.append((fixture.title, False))
             else:
@@ -101,26 +101,6 @@ def add_derby():
 
     return render_template('add_derby.html', title='Add Derby', add_derby_form=add_derby_form)
 
-# @app.route('/edit_article/<article_id>', methods=['GET', 'POST'])
-# def edit_article(article_id):
-#     article = Article.query.filter_by(id=article_id).first_or_404()
-#     if not (current_user.is_authenticated and (current_user.is_admin() or current_user is article.author)):
-#         return render_template('403.html'), 403
-#     form = EditArticleForm()
-#     if form.validate_on_submit():
-#         article.title = form.title.data
-#         article.subtitle = form.subtitle.data
-#         article.body = form.body.data
-#         article.edited_timestamp = dt.datetime.now()
-#         db.session.commit()
-#         flash('Saved')
-#         return redirect(url_for('edit_article', article_id=article.id))
-#     elif request.method == 'GET':
-#         form.title.data = article.title
-#         form.subtitle.data = article.subtitle
-#         form.body.data = article.body
-#
-#     return render_template('edit_article.html', form=form)
 
 @app.route('/post_article', methods=['GET', 'POST'])
 @login_required
