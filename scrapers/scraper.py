@@ -10,15 +10,18 @@ class DateNotFound(Exception):
     pass
 
 
-def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
-    no_meeting_pattern = re.compile(r"unk. |TBA|TBD|To be confirmed")
+no_meeting_pattern = re.compile(r"unk. |TBA|TBD|To be confirmed")
+date_pattern = re.compile(r"\d\d? \w* \d{4}")
+teams_pattern = re.compile(r"(.*)( - | v | (vs) )(.*)")
 
+
+def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
     applogger.info(f'Scraping {wikipedia_url}')
     set_fields = {field: False for field in ['teams', 'competition', 'date']}
 
     r = requests.get(wikipedia_url)
     soup = BeautifulSoup(r.content, 'html.parser')
-    title = soup.find('h1', {'id':'firstHeading'}).text
+    title = soup.find('h1', {'id': 'firstHeading'}).text
 
     # Find `Next meeting` row
     infobox = soup.find('table', {'class': 'infobox'})
@@ -33,8 +36,6 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
 
     competition = date = team_a = team_b = None
 
-    date_pattern = re.compile(r"\d\d? \w* \d{4}")
-    teams_pattern = re.compile(r".+ v.? .+")
     for row in next_meeting_rows:
         # get text content from row
         try:
@@ -61,13 +62,15 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
 
         # teams
         row_text = row_text.replace('v.', 'v')
-        if re.match(teams_pattern, row_text):
-            team_a, team_b = [team.strip() for team in row_text.split(' v ')]
+        match = re.match(teams_pattern, row_text)
+        if match:
+            team_a = match.group(1)
+            team_b = match.group(4)
             set_fields['teams'] = True
             continue
 
     if all(set_fields.values()):
-        match_info = {'team_a': team_a, 'team_b': team_b, 'competition': competition, 'date': date, 'title':title}
+        match_info = {'team_a': team_a, 'team_b': team_b, 'competition': competition, 'date': date, 'title': title}
         return match_info
     else:
         missing_fields = [field for field, is_set in set_fields.items() if not is_set]
@@ -76,7 +79,7 @@ def extract_data_from_wikipedia_page(wikipedia_url: str) -> Dict:
 
 if __name__ == '__main__':
     import datetime as dt
+
     today = dt.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-    fi = extract_data_from_wikipedia_page('https://en.wikipedia.org/wiki/Der_Klassiker')
-    print(today)
-    print(fi['date'] - today)
+    fi = extract_data_from_wikipedia_page('https://en.wikipedia.org/wiki/Traditional_derby')
+    pass

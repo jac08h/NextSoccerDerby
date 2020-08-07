@@ -117,12 +117,6 @@ def post_article():
     return render_template('post_article.html', title='Post Article', form=post_article_form)
 
 
-@app.route('/articles')
-def articles():
-    articles = Article.query.filter_by(is_public=True).order_by(Article.timestamp.desc())
-    return render_template('articles.html', title='Articles', articles=articles)
-
-
 @app.route('/article/<article_id>')
 def article(article_id):
     article = Article.query.filter_by(id=article_id).first_or_404()
