@@ -2,7 +2,7 @@
 
 Website to display dates for upcoming soccer derby matches. Never miss another *El Clásico*!
 
-[Check it out](https://next-soccer-derby.herokuapp.com)
+The website is no longer active, but you can check out the [archived version](https://web.archive.org/web/20211219044408/http://www.nextsoccerderby.com/).
 
 
 ## License
