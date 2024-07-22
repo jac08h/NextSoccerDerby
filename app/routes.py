@@ -10,7 +10,7 @@ import datetime as dt
 @app.route('/')
 @app.route('/index')
 def index():
-    last_updated = "N/A"
+    last_updated = "July 7, 2024"
     return render_template('index.html', last_updated=last_updated)
 
 
