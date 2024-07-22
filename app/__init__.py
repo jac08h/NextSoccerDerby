@@ -6,7 +6,6 @@ from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, current_user
 from flask_bootstrap import Bootstrap
-from flask_redis import FlaskRedis
 from flask_compress import Compress
 import logging
 
@@ -19,7 +18,6 @@ login = LoginManager(app)
 applogger = app.logger
 applogger.setLevel(logging.INFO)
 bootstrap = Bootstrap(app)
-redis_client = FlaskRedis(app, decode_responses=True)
 
 # used in models, probably a wrong place to initialize it
 NULL_REPRESENTATION = '?'

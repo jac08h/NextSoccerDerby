@@ -1,4 +1,4 @@
-from app import db, applogger, redis_client
+from app import db, applogger
 from app.models import Fixture
 from scrapers import scraper
 
@@ -34,7 +34,9 @@ for fixture in fixtures:
 
     db.session.add(fixture)
 
-redis_client.set('last_updated', dt.datetime.now().strftime('%B %-d, %Y'))
+# redis_client.set('last_updated', dt.datetime.now().strftime('%B %-d, %Y'))
+# TODO: Use sqlite database.
+
 # %-d represents a day without a leading zero, but it works only on UNIX systems
 # on Windows, %#d can be used
 db.session.commit()

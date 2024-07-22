@@ -1,4 +1,4 @@
-from app import app, db, applogger, redis_client
+from app import app, db, applogger
 from app.models import Fixture, User, Article
 from app.forms import LoginForm, RegistrationForm, AddDerby, PostArticleForm, EditArticleForm
 
@@ -10,7 +10,7 @@ import datetime as dt
 @app.route('/')
 @app.route('/index')
 def index():
-    last_updated = redis_client.get('last_updated')
+    last_updated = "N/A"
     return render_template('index.html', last_updated=last_updated)
 
 
